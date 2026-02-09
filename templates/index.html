@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Pollution Analysis & Forecasting System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>🌍 Air Pollution Analysis & Forecasting System</h1>
+            <p class="subtitle">AQI Data Analysis and Time-Series Forecasting</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+            <button class="tab-btn" onclick="showTab('trends')">Trends</button>
+            <button class="tab-btn" onclick="showTab('forecast')">Forecast</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="card">
+                <h2>📊 Data Overview</h2>
+                <div class="city-selector">
+                    <label for="city-select-overview">Select City:</label>
+                    <select id="city-select-overview" class="city-dropdown">
+                        <option value="">Loading cities...</option>
+                    </select>
+                </div>
+                <button class="btn-primary" onclick="loadData()">Load AQI Data</button>
+                <div id="data-status" class="status-message"></div>
+                <div id="stats-container" class="stats-grid"></div>
+            </div>
+        </div>
+
+        <!-- Trends Tab -->
+        <div id="trends" class="tab-content">
+            <div class="card">
+                <h2>📈 AQI Trends</h2>
+                <div class="city-selector">
+                    <label for="city-select-trends">Select City:</label>
+                    <select id="city-select-trends" class="city-dropdown">
+                        <option value="">Loading cities...</option>
+                    </select>
+                </div>
+                <div class="chart-controls">
+                    <button class="btn-secondary" onclick="loadDailyTrend()">Daily Trend</button>
+                    <button class="btn-secondary" onclick="loadMonthlyTrend()">Monthly Trend</button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forecast Tab -->
+        <div id="forecast" class="tab-content">
+            <div class="card">
+                <h2>🔮 AQI Forecasting</h2>
+                <div class="city-selector">
+                    <label for="city-select-forecast">Select City:</label>
+                    <select id="city-select-forecast" class="city-dropdown">
+                        <option value="">Loading cities...</option>
+                    </select>
+                </div>
+                <div class="forecast-controls">
+                    <label for="forecast-days">Forecast Days:</label>
+                    <input type="number" id="forecast-days" value="30" min="7" max="90" class="input-field">
+                    <button class="btn-primary" onclick="generateForecast()">Generate Forecast</button>
+                </div>
+                <div id="forecast-status" class="status-message"></div>
+                
+                <!-- Forecast Table -->
+                <div id="forecast-table-container" style="display: none;">
+                    <h3 style="margin-top: 20px; margin-bottom: 15px;">📊 Forecast Values Table</h3>
+                    <div class="table-container">
+                        <table id="forecast-table" class="forecast-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Forecasted AQI</th>
+                                    <th>Lower Bound</th>
+                                    <th>Upper Bound</th>
+                                </tr>
+                            </thead>
+                            <tbody id="forecast-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Chart Type Toggle -->
+                <div class="chart-type-toggle" style="margin-top: 20px; margin-bottom: 10px;">
+                    <button class="btn-secondary" onclick="showForecastChart('line')">Line Chart</button>
+                    <button class="btn-secondary" onclick="showForecastChart('bar')">Bar Chart</button>
+                </div>
+                
+                <!-- Line Chart Container -->
+                <div id="line-chart-container" class="chart-container">
+                    <canvas id="forecastChart"></canvas>
+                </div>
+                
+                <!-- Bar Chart Container -->
+                <div id="bar-chart-container" class="chart-container" style="display: none;">
+                    <canvas id="forecastBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Air Pollution Analysis & Forecasting System | Data Handling & Visualization Project</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
+
